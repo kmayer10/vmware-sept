@@ -27,15 +27,21 @@ spec:
     spec: 
       containers: 
       - name: httpd
-        image: httpd
-      nodeSelector: 
-        kul: owner
+        #image: httpd
+        #image: kulbhushanmayer/ericsson:bangalore-httpd-1.0
+        image: thinknyx/vote:1.0
+        #image: thinknyx/vote:2.0
+     # nodeSelector: 
+     #        kul: owner
 
-  replicas: 3
+  replicas: 15
   selector: 
     matchLabels: 
       app: day3
-
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 5
 ---
 
 apiVersion: v1
