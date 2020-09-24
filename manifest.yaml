@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata: 
+  name: d1
+  labels: 
+    projectname: day3
+    projecttype: bf
+  annotations: 
+    projectid: "1234"
+    app_owner: "kul"
+    support_team: "support@thinknyx.com"
+
+spec: 
+  template: 
+    metadata: 
+      labels: 
+        app: day3
+    spec: 
+      containers: 
+      - name: httpd
+        image: httpd
+
+  replicas: 3
+  selector: 
+    matchLabels: 
+      app: day3
