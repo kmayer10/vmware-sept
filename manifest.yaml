@@ -1,8 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kul
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 
 metadata: 
   name: d1-kul
+  namespace: kul
   labels: 
     projectname: day3
     projecttype: bf
@@ -27,3 +35,53 @@ spec:
   selector: 
     matchLabels: 
       app: day3
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: d1-kul-svc
+  namespace: kul
+spec: 
+  selector: 
+    app: day3
+  ports: 
+  - port: 80
+    nodePort: 30003
+    protocol: TCP
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: d1-kul-svc-1
+  namespace: kul
+spec:
+  selector:
+    app: day3
+  ports:
+  - port: 80
+    nodePort: 32767
+    protocol: TCP
+  type: NodePort
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: d1-kul-svc-2
+  namespace: kul
+spec:
+  selector:
+    app: day3
+  ports:
+  - port: 80
+#    nodePort: 32767
+    protocol: TCP
+  type: ClusterIP
+
