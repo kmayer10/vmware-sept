@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata: 
-  name: d1
+  name: d1-kul
   labels: 
     projectname: day3
     projecttype: bf
@@ -20,6 +20,8 @@ spec:
       containers: 
       - name: httpd
         image: httpd
+      nodeSelector: 
+        kul: owner
 
   replicas: 3
   selector: 
