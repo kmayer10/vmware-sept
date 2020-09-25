@@ -77,6 +77,10 @@ spec:
               name: kul-cm
               key: queue_manager_host
 
+        envFrom:
+        - configMapRef: 
+            name: kul-cm
+
         volumeMounts: 
         - name: nfsdemo
           mountPath: /mnt
