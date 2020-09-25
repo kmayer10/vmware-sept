@@ -36,9 +36,9 @@ metadata:
   name: kul-cm
   namespace: kul
 data: 
-  queue_manager_host: somevalue
-  SMTP_SERVER: smtp.thinknyx.com
-  SMTP_PORT: 25
+  queue_manager_host: "somevalue"
+  SMTP_SERVER: "smtp.thinknyx.com"
+  SMTP_PORT: "25"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -70,6 +70,12 @@ spec:
           value: "mysql.thinknyx.com"
         - name: db_port
           value: "3306"
+
+        - name: QM
+          valueFrom:
+            configMapKeyRef:
+              name: kul-cm
+              key: queue_manager_host
 
         volumeMounts: 
         - name: nfsdemo
