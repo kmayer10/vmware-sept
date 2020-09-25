@@ -54,6 +54,13 @@ spec:
           - -c
           - 'while true; do date >> /mnt/index_kul.html; hostname >> /mnt/index_kul.html; sleep 5; done'
         imagePullPolicy: IfNotPresent
+
+        env: 
+        - name: db_host
+          value: "mysql.thinknyx.com"
+        - name: db_port
+          value: "3306"
+
         volumeMounts: 
         - name: nfsdemo
           mountPath: /mnt
