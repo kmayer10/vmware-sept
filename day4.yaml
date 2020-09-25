@@ -10,9 +10,54 @@ metadata:
   namespace: kul
 spec: 
   capacity: 
-    storage: 5Gi
+    storage: 200Gi
   accessModes: 
   - ReadWriteMany
   nfs: 
     server: fs-8d6d070f.efs.us-east-1.amazonaws.com
     path: "/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: 
+  name: kul-pvc
+  namespace: kul
+spec: 
+  accessModes: 
+  - ReadWriteMany
+  storageClassName: ""
+  resources: 
+    requests: 
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: kul-deploy
+  namespace: kul
+spec: 
+  replicas: 2
+  selector: 
+    matchLabels: 
+      app: demo
+  template: 
+    metadata: 
+      name: demo
+      labels: 
+        app: demo
+    spec: 
+      containers: 
+      - name: busybox
+        image: busybox
+        command: 
+          - sh
+          - -c
+          - 'while true; do date >> /mnt/index_kul.html; hostname >> /mnt/index_kul.html; sleep 5; done'
+        imagePullPolicy: IfNotPresent
+        volumeMounts: 
+        - name: nfsdemo
+          mountPath: /mnt
+      volumes: 
+      - name: nfsdemo
+        persistentVolumeClaim:
+          claimName: kul-pvc
