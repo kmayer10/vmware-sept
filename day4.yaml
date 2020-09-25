@@ -90,7 +90,18 @@ spec:
         volumeMounts: 
         - name: nfsdemo
           mountPath: /mnt
+        - name: secret-as-volume-demo
+          mountPath: /tmp
+          readOnly: true
+
       volumes: 
       - name: nfsdemo
         persistentVolumeClaim:
           claimName: kul-pvc
+
+      - name: secret-as-volume-demo
+        secret: 
+          secretName: db-file
+          items: 
+          - key: demo
+            path: secrets/demo
