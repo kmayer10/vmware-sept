@@ -76,7 +76,13 @@ spec:
             configMapKeyRef:
               name: kul-cm
               key: queue_manager_host
-
+ 
+        - name: DB_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: db-pass
+              key: DB_PASSWORD
+ 
         envFrom:
         - configMapRef: 
             name: kul-cm
